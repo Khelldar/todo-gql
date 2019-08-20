@@ -1,0 +1,33 @@
+type Query {
+  listTodos(input: ListTodosInput!): ListTodosResponse!
+  listBoards(input: ListBoardsInput!): ListBoardsResponse!
+}
+
+## input and response types
+input ListTodosInput {
+  _: Boolean
+}
+type ListTodosResponse {
+  todos: [Todo!]!
+}
+
+input ListBoardsInput {
+  _: Boolean
+}
+type ListBoardsResponse {
+  boards: [Board!]!
+}
+
+## actual types
+type Todo {
+  id: ID!
+  text: String!
+  completed: Boolean
+  board: Board
+}
+
+type Board {
+  id: ID!
+  name: String!
+  todos: [Todo!]!
+}
