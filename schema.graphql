@@ -1,24 +1,76 @@
 type Query {
-  listTodos(input: ListTodosInput!): ListTodosResponse!
-  listBoards(input: ListBoardsInput!): ListBoardsResponse!
+  listTodos(input: ListTodosInput!): ListTodosOutput!
+  listBoards(input: ListBoardsInput!): ListBoardsOutput!
 }
 
-## input and response types
+type Mutation {
+  createTodo(input: CreateTodoInput!): CreateTodoOutput!
+  updateTodo(input: UpdateTodoInput!): UpdateTodoOutput!
+
+  createBoard(input: CreateBoardInput!): CreateBoardOutput!
+  updateBoard(input: UpdateBoardInput!): UpdateBoardOutput!
+
+  addTodoToBoard(input: AddTodoToBoardInput!): AddTodoToBoardOutput!
+}
+
+## -- input and output types --
+
 input ListTodosInput {
   _: Boolean
 }
-type ListTodosResponse {
+type ListTodosOutput {
   todos: [Todo!]!
 }
 
 input ListBoardsInput {
   _: Boolean
 }
-type ListBoardsResponse {
+type ListBoardsOutput {
   boards: [Board!]!
 }
 
-## actual types
+input CreateTodoInput {
+  text: String!
+}
+type CreateTodoOutput {
+  todo: Todo!
+}
+
+#properties are optional to allow for partial updates
+input UpdateTodoInput {
+  id: ID!
+  text: String
+  completed: String
+}
+type UpdateTodoOutput {
+  todo: Todo!
+}
+
+input CreateBoardInput {
+  name: String!
+}
+type CreateBoardOutput {
+  board: Board!
+}
+
+input UpdateBoardInput {
+  id: ID!
+  name: String
+}
+type UpdateBoardOutput {
+  board: Board!
+}
+
+input AddTodoToBoardInput {
+  todoId: ID!
+  boardId: ID!
+}
+type AddTodoToBoardOutput {
+  _: Boolean
+}
+
+## -- actual types --
+
 type Todo {
   id: ID!
   text: String!
