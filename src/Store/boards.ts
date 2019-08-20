@@ -3,12 +3,13 @@ import { Board } from '../types';
 
 interface Row {
   id: string;
+  owner_id: string;
   name: string;
 }
 
 export async function listBoards(): Promise<Board[]> {
   const query = `
-SELECT id, name
+SELECT id, owner_id, name
 FROM boards;`;
 
   const rows: Row[] = await db.any(query);
@@ -20,9 +21,9 @@ export async function getBoards(ids: string[]): Promise<Record<string, Board>> {
   if (ids.length === 0) return {};
 
   const query = `
-SELECT id, name
+SELECT id, owner_id, name
 FROM boards
-WHERE id IN ($ids:csv);`;
+WHERE id IN ($(ids:csv));`;
 
   const rows: Row[] = await db.any(query, { ids });
 
@@ -34,13 +35,13 @@ WHERE id IN ($ids:csv);`;
 
 export async function upsertBoard(board: Board) {
   const query = `
-INSERT INTO todos (id, name) 
-VALUES ($(id), $(name))
+INSERT INTO boards (id, owner_id, name) 
+VALUES ($(id), $(ownerId), $(name))
 ON CONFLICT (id)  
-DO UPDATE SET name = $(name);`;
+DO UPDATE SET owner_id = $(ownerId), name = $(name);`;
   await db.none(query, board);
 }
 
 function parseRow(row: Row): Board {
-  return { id: row.id, name: row.name };
+  return { id: row.id, ownerId: row.owner_id, name: row.name };
 }

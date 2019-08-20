@@ -25,6 +25,7 @@ export type AddTodoToBoardOutput = {
 export type Board = {
   __typename?: 'Board',
   id: Scalars['ID'],
+  owner: User,
   name: Scalars['String'],
   todos: Array<Todo>,
 };
@@ -118,6 +119,7 @@ export type QueryListBoardsArgs = {
 export type Todo = {
   __typename?: 'Todo',
   id: Scalars['ID'],
+  owner: User,
   text: Scalars['String'],
   completed?: Maybe<Scalars['Boolean']>,
   board?: Maybe<Board>,
@@ -142,6 +144,13 @@ export type UpdateTodoInput = {
 export type UpdateTodoOutput = {
   __typename?: 'UpdateTodoOutput',
   todo: Todo,
+};
+
+export type User = {
+  __typename?: 'User',
+  id: Scalars['ID'],
+  firstName: Scalars['String'],
+  lastName: Scalars['String'],
 };
 
 
@@ -220,6 +229,7 @@ export type ResolversTypes = {
   ListTodosOutput: ResolverTypeWrapper<Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> }>,
   Todo: ResolverTypeWrapper<Todo>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
+  User: ResolverTypeWrapper<User>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Board: ResolverTypeWrapper<Board>,
   ListBoardsInput: ListBoardsInput,
@@ -245,6 +255,7 @@ export type ResolversParentTypes = {
   ListTodosOutput: Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> },
   Todo: Todo,
   ID: Scalars['ID'],
+  User: User,
   String: Scalars['String'],
   Board: Board,
   ListBoardsInput: ListBoardsInput,
@@ -268,6 +279,7 @@ export type AddTodoToBoardOutputResolvers<ContextType = any, ParentType extends 
 
 export type BoardResolvers<ContextType = any, ParentType extends ResolversParentTypes['Board'] = ResolversParentTypes['Board']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
 };
@@ -303,6 +315,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   completed?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   board?: Resolver<Maybe<ResolversTypes['Board']>, ParentType, ContextType>,
@@ -314,6 +327,12 @@ export type UpdateBoardOutputResolvers<ContextType = any, ParentType extends Res
 
 export type UpdateTodoOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['UpdateTodoOutput'] = ResolversParentTypes['UpdateTodoOutput']> = {
   todo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType>,
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
@@ -328,6 +347,7 @@ export type Resolvers<ContextType = any> = {
   Todo?: TodoResolvers<ContextType>,
   UpdateBoardOutput?: UpdateBoardOutputResolvers<ContextType>,
   UpdateTodoOutput?: UpdateTodoOutputResolvers<ContextType>,
+  User?: UserResolvers<ContextType>,
 };
 
 

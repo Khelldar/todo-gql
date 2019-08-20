@@ -73,6 +73,7 @@ type AddTodoToBoardOutput {
 
 type Todo {
   id: ID!
+  owner: User!
   text: String!
   completed: Boolean
   board: Board
@@ -80,6 +81,13 @@ type Todo {
 
 type Board {
   id: ID!
+  owner: User!
   name: String!
   todos: [Todo!]!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
 }
