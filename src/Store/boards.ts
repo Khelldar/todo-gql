@@ -17,6 +17,10 @@ FROM boards;`;
   return rows.map(parseRow);
 }
 
+export async function getBoard(id: string): Promise<Board | null> {
+  return (await getBoards([id]))[id] || null;
+}
+
 export async function getBoards(ids: string[]): Promise<Record<string, Board>> {
   if (ids.length === 0) return {};
 

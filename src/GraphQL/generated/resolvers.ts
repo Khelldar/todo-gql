@@ -138,7 +138,7 @@ export type UpdateBoardOutput = {
 export type UpdateTodoInput = {
   id: Scalars['ID'],
   text?: Maybe<Scalars['String']>,
-  completed?: Maybe<Scalars['String']>,
+  completed?: Maybe<Scalars['Boolean']>,
 };
 
 export type UpdateTodoOutput = {

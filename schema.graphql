@@ -40,7 +40,7 @@ type CreateTodoOutput {
 input UpdateTodoInput {
   id: ID!
   text: String
-  completed: String
+  completed: Boolean
 }
 type UpdateTodoOutput {
   todo: Todo!

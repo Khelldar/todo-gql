@@ -29,6 +29,21 @@ export const resolvers: Resolvers<Context> = {
       await Store.upsertTodo(todo);
       return { todo };
     },
+    updateTodo: async (_, args, context) => {
+      const { id, text, completed } = args.input;
+      if (!isValidUuid(id)) throw new UserInputError(`'${id}' is not a uuid`);
+
+      const todo = await Store.getTodo(id);
+      if (!todo) throw new UserInputError(`todo with id '${id} does not exist`);
+
+      const updatedTodo = {
+        ...todo,
+        text: text ? text : todo.text,
+        completed: completed ? completed : todo.completed,
+      };
+      await Store.upsertTodo(updatedTodo);
+      return { todo: updatedTodo };
+    },
     createBoard: async (_, args, context) => {
       const board = {
         id: uuid.v4(),
@@ -38,6 +53,20 @@ export const resolvers: Resolvers<Context> = {
 
       await Store.upsertBoard(board);
       return { board };
+    },
+    updateBoard: async (_, args, context) => {
+      const { id, name } = args.input;
+      if (!isValidUuid(id)) throw new UserInputError(`'${id}' is not a uuid`);
+
+      const board = await Store.getBoard(id);
+      if (!board) throw new UserInputError(`board with id '${id} does not exist`);
+
+      const updatedBoard = {
+        ...board,
+        name: name ? name : board.name,
+      };
+      await Store.upsertBoard(updatedBoard);
+      return { board: updatedBoard };
     },
     addTodoToBoard: async (_, args, context) => {
       /*
@@ -56,14 +85,12 @@ export const resolvers: Resolvers<Context> = {
         );
       }
 
-      const boards = await Store.getBoards([boardId]);
-      const board = boards[boardId];
+      const board = await Store.getBoard(boardId);
       if (!board) {
         throw new UserInputError(`board with id '${boardId} does not exist`);
       }
 
-      const todos = await Store.getTodos([todoId]);
-      const todo = todos[todoId];
+      const todo = await Store.getTodo(todoId);
       if (!todo) {
         throw new UserInputError(`todo with id '${todoId} does not exist`);
       }

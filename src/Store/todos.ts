@@ -27,6 +27,10 @@ ${conditionalsSQL};`;
   return rows.map(parseRow);
 }
 
+export async function getTodo(id: string): Promise<Todo | null> {
+  return (await getTodos([id]))[id] || null;
+}
+
 export async function getTodos(ids: string[]): Promise<Record<string, Todo>> {
   if (ids.length === 0) return {};
 
