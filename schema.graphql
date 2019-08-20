@@ -1,6 +1,6 @@
 type Query {
-  listTodos(input: ListTodosInput!): ListTodosOutput!
-  listBoards(input: ListBoardsInput!): ListBoardsOutput!
+  listTodos: ListTodosOutput!
+  listBoards: ListBoardsOutput!
 }
 
 type Mutation {
@@ -14,17 +14,10 @@ type Mutation {
 }
 
 ## -- input and output types --
-
-input ListTodosInput {
-  _: Boolean
-}
 type ListTodosOutput {
   todos: [Todo!]!
 }
 
-input ListBoardsInput {
-  _: Boolean
-}
 type ListBoardsOutput {
   boards: [Board!]!
 }
@@ -66,6 +59,8 @@ input AddTodoToBoardInput {
   boardId: ID!
 }
 type AddTodoToBoardOutput {
+  # this is to avoid breaking API changes later
+  # if we need to extend this Output with new properties
   _: Boolean
 }
 

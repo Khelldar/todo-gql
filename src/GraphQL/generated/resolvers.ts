@@ -48,17 +48,9 @@ export type CreateTodoOutput = {
   todo: Todo,
 };
 
-export type ListBoardsInput = {
-  _?: Maybe<Scalars['Boolean']>,
-};
-
 export type ListBoardsOutput = {
   __typename?: 'ListBoardsOutput',
   boards: Array<Board>,
-};
-
-export type ListTodosInput = {
-  _?: Maybe<Scalars['Boolean']>,
 };
 
 export type ListTodosOutput = {
@@ -104,16 +96,6 @@ export type Query = {
   __typename?: 'Query',
   listTodos: ListTodosOutput,
   listBoards: ListBoardsOutput,
-};
-
-
-export type QueryListTodosArgs = {
-  input: ListTodosInput
-};
-
-
-export type QueryListBoardsArgs = {
-  input: ListBoardsInput
 };
 
 export type Todo = {
@@ -224,15 +206,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  ListTodosInput: ListTodosInput,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   ListTodosOutput: ResolverTypeWrapper<Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> }>,
   Todo: ResolverTypeWrapper<Todo>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   User: ResolverTypeWrapper<User>,
   String: ResolverTypeWrapper<Scalars['String']>,
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Board: ResolverTypeWrapper<Board>,
-  ListBoardsInput: ListBoardsInput,
   ListBoardsOutput: ResolverTypeWrapper<Omit<ListBoardsOutput, 'boards'> & { boards: Array<ResolversTypes['Board']> }>,
   Mutation: ResolverTypeWrapper<{}>,
   CreateTodoInput: CreateTodoInput,
@@ -250,15 +230,13 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  ListTodosInput: ListTodosInput,
-  Boolean: Scalars['Boolean'],
   ListTodosOutput: Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> },
   Todo: Todo,
   ID: Scalars['ID'],
   User: User,
   String: Scalars['String'],
+  Boolean: Scalars['Boolean'],
   Board: Board,
-  ListBoardsInput: ListBoardsInput,
   ListBoardsOutput: Omit<ListBoardsOutput, 'boards'> & { boards: Array<ResolversTypes['Board']> },
   Mutation: {},
   CreateTodoInput: CreateTodoInput,
@@ -309,8 +287,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  listTodos?: Resolver<ResolversTypes['ListTodosOutput'], ParentType, ContextType, RequireFields<QueryListTodosArgs, 'input'>>,
-  listBoards?: Resolver<ResolversTypes['ListBoardsOutput'], ParentType, ContextType, RequireFields<QueryListBoardsArgs, 'input'>>,
+  listTodos?: Resolver<ResolversTypes['ListTodosOutput'], ParentType, ContextType>,
+  listBoards?: Resolver<ResolversTypes['ListBoardsOutput'], ParentType, ContextType>,
 };
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {

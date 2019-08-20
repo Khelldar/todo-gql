@@ -7,11 +7,11 @@ import { UserInputError } from 'apollo-server-core';
 
 export const resolvers: Resolvers<Context> = {
   Query: {
-    listTodos: async (_, _args, context) => {
+    listTodos: async (_, args, context) => {
       const todos = await Store.listTodos({});
       return { todos };
     },
-    listBoards: async (_, _args, context) => {
+    listBoards: async (_, args, context) => {
       const boards = await Store.listBoards();
       return { boards };
     },
