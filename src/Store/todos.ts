@@ -40,6 +40,7 @@ INSERT INTO todos (id, text, completed, board_id)
 VALUES ($(id), $(text), $(completed), $(boardId))
 ON CONFLICT (id)  
 DO UPDATE SET text = $(text), completed = $(completed), board_id = $(boardId);`;
+
   await db.none(query, todo);
 }
 

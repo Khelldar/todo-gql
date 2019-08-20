@@ -7,7 +7,8 @@ generates:
   ./src/GraphQL/generated/resolvers.ts:
     config:
       mappers:
-        # Reports: ../../types#Reports
+        Todo: ../../types#Todo
+        Board: ../../types#Board
     plugins:
       - typescript
       - typescript-resolvers
