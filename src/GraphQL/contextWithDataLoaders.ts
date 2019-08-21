@@ -1,3 +1,9 @@
+import {
+  newUserTodosDataLoader,
+  newUserDataLoader,
+  newBoardTododsDataLoader,
+} from './DataLoaders';
+
 export type Context = ReturnType<typeof context>;
 
 export function context({ req }) {
@@ -10,5 +16,8 @@ export function context({ req }) {
 
   return {
     userId,
+    userDataLoader: newUserDataLoader(),
+    boardTodosDataLoader: newBoardTododsDataLoader(),
+    userTodosDataLoader: newUserTodosDataLoader(),
   };
 }
