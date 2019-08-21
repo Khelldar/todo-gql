@@ -22,6 +22,7 @@ SELECT id, owner_id, text, completed, board_id
 FROM todos
 ${conditionalsSQL};`;
 
+  console.log('list todos called');
   const rows: Row[] = await db.any(query, args);
 
   return rows.map(parseRow);

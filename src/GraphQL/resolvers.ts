@@ -44,6 +44,7 @@ export const resolvers: Resolvers<Context> = {
     todos: async (board, _, context) => Store.listTodos({ boardIds: [board.id] }),
   },
   User: {
-    todos: async (user, _, context) => Store.listTodos({ userIds: [user.id] }),
+    // todos: async (user, _, context) => Store.listTodos({ userIds: [user.id] }),
+    todos: async (user, _, context) => context.userTodosDataLoader.load(user.id),
   },
 };
