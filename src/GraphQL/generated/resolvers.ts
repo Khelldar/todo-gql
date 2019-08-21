@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Todo, Board } from '../../types';
+import { Todo, Board, User } from '../../types';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
@@ -133,6 +133,7 @@ export type User = {
   id: Scalars['ID'],
   firstName: Scalars['String'],
   lastName: Scalars['String'],
+  todos: Array<Todo>,
 };
 
 
@@ -311,6 +312,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {

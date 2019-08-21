@@ -9,6 +9,7 @@ generates:
       mappers:
         Todo: ../../types#Todo
         Board: ../../types#Board
+        User: ../../types#User
     plugins:
       - typescript
       - typescript-resolvers

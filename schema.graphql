@@ -85,4 +85,5 @@ type User {
   id: ID!
   firstName: String!
   lastName: String!
+  todos: [Todo!]!
 }
