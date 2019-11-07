@@ -9,6 +9,13 @@ export function newUserDataLoader() {
   });
 }
 
+export function newBoardDataLoader() {
+  return new DataLoader(async (ids: string[]) => {
+    const boards = await Store.getBoards(ids);
+    return ids.map(id => boards[id] || null);
+  });
+}
+
 export function newUserTodosDataLoader() {
   return new DataLoader(async (userIds: string[]) => {
     const todos = await Store.listTodos({ userIds });

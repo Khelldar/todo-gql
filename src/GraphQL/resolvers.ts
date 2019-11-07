@@ -1,10 +1,14 @@
 import { Resolvers } from './generated/resolvers';
-import { Context } from './context';
+import { Context } from './contextWithDataLoaders';
 import * as Store from '../Store';
 import * as Service from '../Service';
 
 export const resolvers: Resolvers<Context> = {
   Query: {
+    listUsers: async () => {
+      const users = await Store.listUsers();
+      return { users };
+    },
     listTodos: async (_, args, context) => {
       const todos = await Store.listTodos({});
       return { todos };
@@ -37,9 +41,13 @@ export const resolvers: Resolvers<Context> = {
     },
   },
   Todo: {
-    board: async (todo, _, context) => Store.getBoard(todo.boardId),
+    owner: async (todo, _, context) => context.userDataLoader.load(todo.ownerId),
+    board: async (todo, _, context) => context.boardDataLoader.load(todo.boardId),
   },
   Board: {
-    todos: async (board, _, context) => Store.listTodos({ boardIds: [board.id] }),
+    todos: async (board, _, context) => context.boardTodosDataLoader.load(board.id),
+  },
+  User: {
+    todos: async (user, _, context) => context.userTodosDataLoader.load(user.id),
   },
 };

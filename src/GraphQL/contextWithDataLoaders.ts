@@ -2,6 +2,7 @@ import {
   newUserTodosDataLoader,
   newUserDataLoader,
   newBoardTododsDataLoader,
+  newBoardDataLoader,
 } from './DataLoaders';
 
 export type Context = ReturnType<typeof context>;
@@ -17,6 +18,7 @@ export function context({ req }) {
   return {
     userId,
     userDataLoader: newUserDataLoader(),
+    boardDataLoader: newBoardDataLoader(),
     boardTodosDataLoader: newBoardTododsDataLoader(),
     userTodosDataLoader: newUserTodosDataLoader(),
   };

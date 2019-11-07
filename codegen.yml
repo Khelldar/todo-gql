@@ -1,5 +1,4 @@
-
-schema: 
+schema:
   - schema.graphql
 overwrite: true
 federation: true

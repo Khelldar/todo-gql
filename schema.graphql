@@ -1,4 +1,5 @@
 type Query {
+  listUsers: ListUsersOutput!
   listTodos: ListTodosOutput!
   listBoards: ListBoardsOutput!
 }
@@ -14,6 +15,10 @@ type Mutation {
 }
 
 ## -- input and output types --
+type ListUsersOutput {
+  users: [User!]!
+}
+
 type ListTodosOutput {
   todos: [Todo!]!
 }
@@ -68,7 +73,7 @@ type AddTodoToBoardOutput {
 
 type Todo {
   id: ID!
-  ownerId: ID! #hm...
+  owner: User!
   text: String!
   completed: Boolean!
   board: Board
@@ -85,4 +90,5 @@ type User {
   id: ID!
   firstName: String!
   lastName: String!
+  todos: [Todo!]!
 }

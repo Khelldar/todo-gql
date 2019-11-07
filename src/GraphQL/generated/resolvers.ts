@@ -58,6 +58,11 @@ export type ListTodosOutput = {
   todos: Array<Todo>,
 };
 
+export type ListUsersOutput = {
+  __typename?: 'ListUsersOutput',
+  users: Array<User>,
+};
+
 export type Mutation = {
   __typename?: 'Mutation',
   createTodo: CreateTodoOutput,
@@ -94,6 +99,7 @@ export type MutationAddTodoToBoardArgs = {
 
 export type Query = {
   __typename?: 'Query',
+  listUsers: ListUsersOutput,
   listTodos: ListTodosOutput,
   listBoards: ListBoardsOutput,
 };
@@ -101,7 +107,7 @@ export type Query = {
 export type Todo = {
   __typename?: 'Todo',
   id: Scalars['ID'],
-  ownerId: Scalars['String'],
+  owner: User,
   text: Scalars['String'],
   completed: Scalars['Boolean'],
   board?: Maybe<Board>,
@@ -133,6 +139,7 @@ export type User = {
   id: Scalars['ID'],
   firstName: Scalars['String'],
   lastName: Scalars['String'],
+  todos: Array<Todo>,
 };
 
 
@@ -206,13 +213,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  ListTodosOutput: ResolverTypeWrapper<Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> }>,
-  Todo: ResolverTypeWrapper<Todo>,
+  ListUsersOutput: ResolverTypeWrapper<Omit<ListUsersOutput, 'users'> & { users: Array<ResolversTypes['User']> }>,
+  User: ResolverTypeWrapper<User>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   String: ResolverTypeWrapper<Scalars['String']>,
+  Todo: ResolverTypeWrapper<Todo>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Board: ResolverTypeWrapper<Board>,
-  User: ResolverTypeWrapper<User>,
+  ListTodosOutput: ResolverTypeWrapper<Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> }>,
   ListBoardsOutput: ResolverTypeWrapper<Omit<ListBoardsOutput, 'boards'> & { boards: Array<ResolversTypes['Board']> }>,
   Mutation: ResolverTypeWrapper<{}>,
   CreateTodoInput: CreateTodoInput,
@@ -230,13 +238,14 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  ListTodosOutput: Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> },
-  Todo: Todo,
+  ListUsersOutput: Omit<ListUsersOutput, 'users'> & { users: Array<ResolversTypes['User']> },
+  User: User,
   ID: Scalars['ID'],
   String: Scalars['String'],
+  Todo: Todo,
   Boolean: Scalars['Boolean'],
   Board: Board,
-  User: User,
+  ListTodosOutput: Omit<ListTodosOutput, 'todos'> & { todos: Array<ResolversTypes['Todo']> },
   ListBoardsOutput: Omit<ListBoardsOutput, 'boards'> & { boards: Array<ResolversTypes['Board']> },
   Mutation: {},
   CreateTodoInput: CreateTodoInput,
@@ -278,6 +287,10 @@ export type ListTodosOutputResolvers<ContextType = any, ParentType extends Resol
   todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
 };
 
+export type ListUsersOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['ListUsersOutput'] = ResolversParentTypes['ListUsersOutput']> = {
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>,
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createTodo?: Resolver<ResolversTypes['CreateTodoOutput'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'input'>>,
   updateTodo?: Resolver<ResolversTypes['UpdateTodoOutput'], ParentType, ContextType, RequireFields<MutationUpdateTodoArgs, 'input'>>,
@@ -287,13 +300,14 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  listUsers?: Resolver<ResolversTypes['ListUsersOutput'], ParentType, ContextType>,
   listTodos?: Resolver<ResolversTypes['ListTodosOutput'], ParentType, ContextType>,
   listBoards?: Resolver<ResolversTypes['ListBoardsOutput'], ParentType, ContextType>,
 };
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   board?: Resolver<Maybe<ResolversTypes['Board']>, ParentType, ContextType>,
@@ -311,6 +325,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
@@ -320,6 +335,7 @@ export type Resolvers<ContextType = any> = {
   CreateTodoOutput?: CreateTodoOutputResolvers<ContextType>,
   ListBoardsOutput?: ListBoardsOutputResolvers<ContextType>,
   ListTodosOutput?: ListTodosOutputResolvers<ContextType>,
+  ListUsersOutput?: ListUsersOutputResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Todo?: TodoResolvers<ContextType>,

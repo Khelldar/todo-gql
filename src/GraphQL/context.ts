@@ -1,6 +1,6 @@
 export type Context = ReturnType<typeof context>;
-// import * as DataLoader from 'dataloader';
-// import * as Store from '../Store';
+import * as DataLoader from 'dataloader';
+import * as Store from '../Store';
 
 export function context({ req }) {
   /*
@@ -12,5 +12,9 @@ export function context({ req }) {
 
   return {
     userId,
+    userDataLoader: new DataLoader(async (ids: string[]) => {
+      const users = await Store.getUsers(ids);
+      return ids.map(id => users[id] || null);
+    }),
   };
 }

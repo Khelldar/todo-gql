@@ -2,7 +2,7 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import { buildFederatedSchema } from '@apollo/federation';
 
 import { resolvers } from './resolvers';
-import { context } from './context';
+import { context } from './contextWithDataLoaders';
 import * as fs from 'fs';
 import * as path from 'path';
 

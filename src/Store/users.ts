@@ -29,7 +29,7 @@ SELECT id, first_name, last_name
 FROM users
 WHERE id IN ($(ids:csv));`;
 
-  // console.log(`looking up the following users '${ids}'...`);
+  console.log(`looking up the following users '${ids}'...`);
   const rows: Row[] = await db.any(query, { ids });
 
   return rows.reduce((acc, row) => {
